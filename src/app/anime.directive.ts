@@ -5,12 +5,15 @@ declare var anime : any;
 })
 export class AnimeDirective implements OnDestroy,OnChanges{
   @Input() appAnime!:any;
+
   private animeInstance:any;
+
   constructor(private elRef: ElementRef) {}
 
   ngOnDestroy(): void {
     this.removeInstance();
   }
+  
   ngOnChanges(changes:any): void {
     if ('appAnime' in changes) {
       this.removeInstance();

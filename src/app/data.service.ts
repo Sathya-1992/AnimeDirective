@@ -5,12 +5,19 @@ import { Injectable } from '@angular/core';
 })
 export class DataService {
   isShowAnimeCard:boolean = false;
+  
   isShowDirection:boolean = false;
+  
   isShowEasing:boolean = false;
+  
   animations:string[]=["translateX","translateY","scaleX","scaleY","rotateX","rotateY"];
+ 
   direction:string[]=["normal","reverse","alternate"];
+  
   easing:string[]=['easeInQuad','easeOutQuad','easeInOutQuad','easeOutInQuad','easeInCubic','easeOutCubic','easeInOutCubic','easeOutInCubic','easeInQuart','easeOutQuart']
+  
   animeProperties!:any;
+  
   constructor() { }
 
   

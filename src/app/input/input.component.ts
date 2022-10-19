@@ -51,7 +51,6 @@ export class InputComponent implements OnInit, AfterViewInit {
   }
 
   addInputProperties(){
-    if(!this.inputProperties){
       this.inputProperties = {
         [this.animation]:{
          "value":this.value,
@@ -61,22 +60,10 @@ export class InputComponent implements OnInit, AfterViewInit {
         },
         "direction":this.directionType,
        };
-    }
-    else{
-      this.inputProperties = {
-        [this.animation]:{
-         "value":this.value,
-        "duration":this.duration,
-        "delay":this.delay,
-        "easing":this.easingType
-        },
-        "direction":this.directionType,
-       };
-    }
-   
+       this.data.setAnimeProperties(this.inputProperties);
   }
 
-  setInputProperties(){
-    this.data.setAnimeProperties(this.inputProperties);
-  }
+  // setInputProperties(){
+  //   this.data.setAnimeProperties(this.inputProperties);
+  // }
 }

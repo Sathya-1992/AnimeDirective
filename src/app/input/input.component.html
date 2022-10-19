@@ -1,0 +1,34 @@
+<div class="form">
+    <div class="animeInput">
+        <div>Animation Name</div>
+        <div class="animeBox" (click)="this.data.isShowAnimeCard=true" #animationName></div>
+        <!-- <app-list-card *ngIf="this.data.isShowAnimeCard" [inputList]="this.data.animations"></app-list-card> -->
+        <div class="searchItems" *ngIf="this.data.isShowAnimeCard">
+            <div *ngFor="let anime of this.data.animations" (click)="selectAnimation(anime)">{{anime}}</div>
+        </div>
+    </div>
+    <div>Value</div>
+    <input type="number" [(ngModel)]="value">
+    <div>Duration</div>
+    <input type="number" [(ngModel)]="duration">
+    <div>Delay</div>
+    <input type="number" [(ngModel)]="delay">
+    <div class="animeInput">
+        <div>Direction</div>
+        <div class="animeBox" (click)="this.data.isShowDirection=true" #direction></div>
+        <div class="searchItems" *ngIf="this.data.isShowDirection">
+            <div *ngFor="let direction of this.data.direction" (click)="selectDirection(direction)">{{direction}}</div>
+        </div>
+    </div>
+    <div class="animeInput">
+        <div>Easing</div>
+        <div class="animeBox" (click)="this.data.isShowEasing=true" #easing></div>
+        <div class="searchItems" *ngIf="this.data.isShowEasing">
+            <div *ngFor="let easing of this.data.easing" (click)="selectEasing(easing)">{{easing}}</div>
+        </div>
+    </div>
+    <div class="buttonAlign">
+        <button (click)="addInputProperties()">Add</button>
+        <button (click)="setInputProperties()">Submit</button>
+    </div>
+</div>

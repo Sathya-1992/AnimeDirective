@@ -1,0 +1,49 @@
+.form{
+    background-color: rgb(212, 214, 215);
+    padding: 1rem;
+    
+}
+.animeInput{
+    position: relative;
+}
+.animeBox,input{
+    width: 25rem;
+    height: 3rem;
+    border: 1px solid rgb(149, 147, 147);
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    padding-left: 1rem;
+}
+input:focus{
+    border: 1px solid rgb(5, 105, 245);
+}
+.animeBox::after{
+    content: url(./expand.png);
+    position: absolute;
+    right: 1rem; 
+}
+.searchItems{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 25rem;
+    border: 1px solid rgba(0,0,0,.2);
+    background-color: #fff;
+    border-radius: 0 0 2px 2px;
+    box-shadow: 0px 8px 10px 1px rgb(0 0 0 / 14%), 
+                0px 3px 14px 2px rgb(0 0 0 / 12%),
+                0px 5px 5px -3px rgb(0 0 0 / 20%);
+    top:4.5rem;
+    z-index: 5;
+    padding-left: 1rem;
+}
+.buttonAlign{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 2rem;
+}
+button{
+    padding: 0.5rem 1rem;
+}

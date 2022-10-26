@@ -13,12 +13,15 @@ export class AnimeDirective implements OnDestroy,OnChanges{
   ngOnDestroy(): void {
     this.removeInstance();
   }
-  
+
   ngOnChanges(changes:any): void {
+    console.log("On changes")
     if ('appAnime' in changes) {
       this.removeInstance();
+      // console.log(document.querySelector(".cir-parent"))
       this.animeInstance = anime({
-        targets: this.elRef.nativeElement,
+        // targets: this.elRef.nativeElement,
+        // targets : document.querySelectorAll(".cir-parent .circle"),
         ...this.appAnime,
       });
     }

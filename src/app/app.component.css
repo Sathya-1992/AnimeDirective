@@ -15,3 +15,12 @@
     border-radius: 50%;
     background-color: blue;
 }
+.cir-parent{
+    width: 50rem;
+    height: 30rem;
+    display: flex;
+    border: 1px solid black;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 1rem;
+}

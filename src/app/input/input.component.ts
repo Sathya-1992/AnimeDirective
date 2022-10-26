@@ -8,16 +8,22 @@ import { DataService } from '../data.service';
 })
 export class InputComponent implements OnInit, AfterViewInit {
   transform : string="";
+  
   @ViewChild ('animationName') animationName!:ElementRef;
-  @ViewChild ('direction') direction!:ElementRef;
+  
   @ViewChild ('easing') easing!:ElementRef;
+  
+  @ViewChild ('element') element!:ElementRef;
+
+  inputOption!:string;
+  selectorName:string="";
   animation!:string;
-  value:number=0;
-  duration:number=0;
+  duration:number=200;
   delay:number=0;
-  directionType!:string;
+  loop:number=1;
   easingType!:string;
   inputProperties !:any;
+  
   constructor(public data:DataService) { }
 
   ngOnInit(): void {
@@ -25,25 +31,37 @@ export class InputComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log("Howmany times")
+    this.element.nativeElement.textContent = this.data.targetElement.className;
     this.animationName.nativeElement.textContent = this.data.animations[0];
-    this.direction.nativeElement.textContent = this.data.direction[0];
     this.easing.nativeElement.textContent = this.data.easing[0];
     this.animation = this.data.animations[0];
-    this.directionType = this.data.direction[0];
     this.easingType = this.data.easing[0];
   }
+
+  getInputElements(options:string){
+    this.inputOption = options;
+  }
+
+  addElements(){
+
+  }
+
+  showAnimeCard(e:Event){
+    e.stopPropagation();
+    this.data.isShowAnimeCard=!this.data.isShowAnimeCard
+  }
+
+  showEasing(e:Event){
+    e.stopPropagation();
+    this.data.isShowEasing=!this.data.isShowEasing;
+  }
+
   selectAnimation(anime:string){
     this.animationName.nativeElement.textContent = anime;
     this.animation=anime;
-    console.log("kjhgfdsfghjkl"+this.animation)
     this.data.isShowAnimeCard=false;
   }
-  selectDirection(direction:string){
-    this.direction.nativeElement.textContent = direction;
-    this.directionType = direction;
-    this.data.isShowDirection=false;
-  }
+  
   selectEasing(easing:string){
     this.easing.nativeElement.textContent = easing;
     this.easingType = easing;
@@ -51,19 +69,52 @@ export class InputComponent implements OnInit, AfterViewInit {
   }
 
   addInputProperties(){
-      this.inputProperties = {
-        [this.animation]:{
-         "value":this.value,
-        "duration":this.duration,
-        "delay":this.delay,
-        "easing":this.easingType
-        },
-        "direction":this.directionType,
-       };
-       this.data.setAnimeProperties(this.inputProperties);
+    this.data.isShowForm = false;
+    switch(this.animation){
+      case "Pulse":
+        this.setInputProperties("scale",[1,0.6],"alternate");
+        break;
+      case "Flash":
+        this.setInputProperties("opacity",[1,0], "alternate");
+        break;
+      case "Swing":
+        this.setInputProperties("rotate",[-3,3],"alternate");
+        break;
+      case "Grow":
+        this.setInputProperties("scale",[1,0],"alternate");
+        break;
+      case "Bounce":
+        this.setInputProperties("translateY",[0,-30,0,-15,0,-7,0,-3,0],"alternate");
+        break;
+      // case "Custom":
+
+    }
+      
   }
 
-  // setInputProperties(){
-  //   this.data.setAnimeProperties(this.inputProperties);
-  // }
+  setInputProperties(animeType:string,value:number[],directionName:string){
+    let target = this.getTargetElement();
+    this.inputProperties = {
+      "targets":target,
+        [animeType] : value,
+        "duration":this.duration,
+        "delay":this.delay,
+        "easing":this.easingType,
+        "direction":directionName,
+        "loop":this.loop
+       };
+
+    this.data.setAnimeProperties(this.inputProperties);
+  }
+
+  getTargetElement(){
+    let targetEl;
+    if(this.inputOption){
+
+    }
+    else{
+      targetEl = this.data.targetElement;
+    }
+    return targetEl;
+  }
 }

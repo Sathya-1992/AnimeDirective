@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener } from '@angular/core';
 import { DataService } from './data.service';
 
 @Component({
@@ -9,5 +9,14 @@ import { DataService } from './data.service';
 export class AppComponent {
   title = 'anime-angular';
   constructor(public data:DataService) { }
+  getElementByClick(e:any){
+    this.data.targetElement = e.target;
+    this.data.isShowForm = true;
+  }
 
+  disableInput(){
+    this.data.isShowAnimeCard = false;
+    this.data.isShowEasing = false;
+  }
+  
 }

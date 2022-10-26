@@ -2,15 +2,15 @@
   <div class="boxCont" (click)="getElementByClick($event)">
     <div class="cir-parent">
       <div class="circle"></div>
+      <div class="box"></div>
       <div class="circle"></div>
-      <div class="circle"></div>
-      <div class="circle"></div>
+      <div class="box"></div>
       <div class="circle"></div>
     </div>
     <!-- <div [appAnime]="this.data.animeProperties" class="circle"></div> -->
   </div>
   <div class="boxCont">
-    <app-input *ngIf="this.data.isShowForm"></app-input>
+    <app-input *ngIf="this.data.isShowForm" [target]="targetElement"></app-input>
   </div>
 </div>
 

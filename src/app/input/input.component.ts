@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../data.service';
 
 @Component({
@@ -7,16 +7,17 @@ import { DataService } from '../data.service';
   styleUrls: ['./input.component.css']
 })
 export class InputComponent implements OnInit, AfterViewInit {
+  @Input() target:any;
+
   transform : string="";
   
   @ViewChild ('animationName') animationName!:ElementRef;
   
   @ViewChild ('easing') easing!:ElementRef;
-  
-  @ViewChild ('element') element!:ElementRef;
 
-  inputOption!:string;
+  isShowSelector:boolean=false;
   selectorName:string="";
+  targetArray:any[]=[];
   animation!:string;
   duration:number=200;
   delay:number=0;
@@ -31,19 +32,23 @@ export class InputComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.element.nativeElement.textContent = this.data.targetElement.className;
     this.animationName.nativeElement.textContent = this.data.animations[0];
     this.easing.nativeElement.textContent = this.data.easing[0];
     this.animation = this.data.animations[0];
     this.easingType = this.data.easing[0];
   }
 
-  getInputElements(options:string){
-    this.inputOption = options;
-  }
-
   addElements(){
-
+    if(this.isShowSelector && this.selectorName){
+      if(!this.targetArray.includes(`.${this.target.className} .${this.selectorName}`)){
+        this.targetArray.push(`.${this.target.className} .${this.selectorName}`);
+      }  
+    }
+    else{
+      if(!this.targetArray.includes(this.target)){
+        this.targetArray.push(this.target);
+      }  
+    }
   }
 
   showAnimeCard(e:Event){
@@ -86,6 +91,9 @@ export class InputComponent implements OnInit, AfterViewInit {
       case "Bounce":
         this.setInputProperties("translateY",[0,-30,0,-15,0,-7,0,-3,0],"alternate");
         break;
+      case "Move":
+        this.setInputProperties("translateX",[0,100],"alternate");
+        break;
       // case "Custom":
 
     }
@@ -93,9 +101,9 @@ export class InputComponent implements OnInit, AfterViewInit {
   }
 
   setInputProperties(animeType:string,value:number[],directionName:string){
-    let target = this.getTargetElement();
+    this.addElements();
     this.inputProperties = {
-      "targets":target,
+      "targets":this.targetArray,
         [animeType] : value,
         "duration":this.duration,
         "delay":this.delay,
@@ -107,14 +115,5 @@ export class InputComponent implements OnInit, AfterViewInit {
     this.data.setAnimeProperties(this.inputProperties);
   }
 
-  getTargetElement(){
-    let targetEl;
-    if(this.inputOption){
-
-    }
-    else{
-      targetEl = this.data.targetElement;
-    }
-    return targetEl;
-  }
+  
 }

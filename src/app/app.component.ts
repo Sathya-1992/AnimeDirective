@@ -8,9 +8,11 @@ import { DataService } from './data.service';
 })
 export class AppComponent {
   title = 'anime-angular';
+  targetElement!:HTMLElement
   constructor(public data:DataService) { }
   getElementByClick(e:any){
-    this.data.targetElement = e.target;
+    // this.data.targetElement = e.target;
+    this.targetElement = e.target;
     this.data.isShowForm = true;
   }
 

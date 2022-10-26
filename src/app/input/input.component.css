@@ -51,14 +51,12 @@ button{
 }
 .selection{
     display: flex;
-    justify-content: space-between;
     align-items: center;
     gap:0.5rem;
 }
 .radioBox{
     height: 1rem;
     width: 1rem;
-    border-radius: 50%;
     border: 1px solid black;
 }
 .selectedBox{

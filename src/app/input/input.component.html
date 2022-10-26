@@ -1,20 +1,19 @@
 <div class="form">
     <div class="animeInput">
         <div>Element</div>
-        <div class="element" #element></div>
+        <div class="element">{{target.className}}</div>
     </div>
-    <div class="selection">
-        <div *ngFor="let ele of this.data.inputElements" class="selection" (click)="getInputElements(ele)">
-            <span class="radioBox" [ngClass]="{'selectedBox':ele===inputOption}"></span>
-            <span>{{ele}}</span>
+    <div>
+        <div class="selection" (click)="isShowSelector=!isShowSelector">
+            <span class="radioBox" [ngClass]="{'selectedBox':isShowSelector}"></span>
+            <span>Selector</span>
         </div>
+        <input type="text" *ngIf="isShowSelector" [(ngModel)]="selectorName">
     </div>
-    <input type="text" *ngIf="inputOption==='Selector'" [(ngModel)]="selectorName">
-    <button *ngIf="inputOption==='Array'" (click)="addElements()">Add Element</button>
+    <button (click)="addElements()">Add Multiple Elements</button>
     <div class="animeInput">
         <div>Animation Name</div>
         <div class="animeBox" (click)="showAnimeCard($event)" #animationName></div>
-        <!-- <app-list-card *ngIf="this.data.isShowAnimeCard" [inputList]="this.data.animations"></app-list-card> -->
         <div class="searchItems" *ngIf="this.data.isShowAnimeCard">
             <div *ngFor="let anime of this.data.animations" (click)="selectAnimation(anime)">{{anime}}</div>
         </div>
@@ -40,6 +39,5 @@
     </div>
     <div class="buttonAlign">
         <button (click)="addInputProperties()">Add</button>
-        <!-- <button (click)="setInputProperties()">Submit</button> -->
     </div>
 </div>

@@ -9,16 +9,12 @@ export class DataService {
   isShowEasing:boolean = false;
 
   isShowForm:boolean = false;
-
-  inputElements:string[]=["Selector","Array"];
   
-  animations:string[]=["Pulse","Flash","Swing","Grow","Bounce","Custom"];
+  animations:string[]=["Pulse","Flash","Swing","Grow","Bounce","Move","Custom"];
   
   easing:string[]=['linear','easeInQuad','easeOutQuad','easeInOutQuad','easeOutInQuad','easeInCubic','easeOutCubic','easeInOutCubic','easeOutInCubic','easeInQuart','easeOutQuart']
   
   animeProperties!:any;
-
-  targetElement!:HTMLElement;
   
   constructor() { }
 

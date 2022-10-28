@@ -8,18 +8,29 @@ export class DataService {
   
   isShowEasing:boolean = false;
 
+  isShowDirection = false;
+
   isShowForm:boolean = false;
   
-  animations:string[]=["Pulse","Flash","Swing","Grow","Bounce","Move","Custom"];
+  animations:string[]=["Pulse","Flash","Swing","Grow","Bounce","HorizontalMove","VerticalMove","Rotate","Custom"];
   
   easing:string[]=['linear','easeInQuad','easeOutQuad','easeInOutQuad','easeOutInQuad','easeInCubic','easeOutCubic','easeInOutCubic','easeOutInCubic','easeInQuart','easeOutQuart']
   
+  direction:string[]=['alternate','normal','reverse'];
+  
   animeProperties!:any;
+
+  timelineParent!:any;
+  timelineProperties!:any;
   
   constructor() { }
 
   setAnimeProperties(values:any){
-    console.log(values)
     this.animeProperties = values;
+  }
+
+  setAnimeTimelineProperties(parent:any,properties:any){
+    this.timelineParent = parent;
+    this.timelineProperties = properties;
   }
 }

@@ -62,3 +62,8 @@ button{
 .selectedBox{
     background-color: rgb(57, 148, 246);
 }
+.timeline{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

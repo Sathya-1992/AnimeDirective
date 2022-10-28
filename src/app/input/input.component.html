@@ -33,11 +33,25 @@
             <div *ngFor="let easing of this.data.easing" (click)="selectEasing(easing)">{{easing}}</div>
         </div>
     </div>
-    <div>
+    <div class="animeInput" *ngIf="!isAnimeTimeline">
+        <div>Direction</div>
+        <div class="animeBox" (click)="showDirection($event)" #direction></div>
+        <div class="searchItems" *ngIf="this.data.isShowDirection">
+            <div *ngFor="let direction of this.data.direction" (click)="selectDirection(direction)">{{direction}}</div>
+        </div>
+    </div>
+    <div *ngIf="!isAnimeTimeline">
         <div>Loop</div>
         <input type="number" [(ngModel)]="loop">
     </div>
+    <div class="timeline">
+        <div class="selection" (click)="getTimelineElements()">
+            <span class="radioBox" [ngClass]="{'selectedBox':isShowTimeline}"></span>
+            <span>Timeline</span>
+        </div>
+        <button *ngIf="isShowTimeline" (click)="addTimeline()">Add Timeline</button>
+    </div>
     <div class="buttonAlign">
-        <button (click)="addInputProperties()">Add</button>
+        <button (click)="addInputProperties()">Submit</button>
     </div>
 </div>

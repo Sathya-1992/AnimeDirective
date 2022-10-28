@@ -6,6 +6,12 @@ declare var anime : any;
 export class AnimeDirective implements OnDestroy,OnChanges{
   @Input() appAnime!:any;
 
+  @Input() timeline!:any;
+
+  @Input() appAnimeTimeline!:any;
+
+  @Input() appAnimeTimeProp!:any;
+
   private animeInstance:any;
 
   constructor(private elRef: ElementRef) {}
@@ -15,15 +21,21 @@ export class AnimeDirective implements OnDestroy,OnChanges{
   }
 
   ngOnChanges(changes:any): void {
-    console.log("On changes")
     if ('appAnime' in changes) {
       this.removeInstance();
-      // console.log(document.querySelector(".cir-parent"))
-      this.animeInstance = anime({
-        // targets: this.elRef.nativeElement,
-        // targets : document.querySelectorAll(".cir-parent .circle"),
-        ...this.appAnime,
-      });
+      console.log(this.appAnime);
+      this.animeInstance = anime(
+        this.appAnime,
+      );
+    }
+    else if('timeline' in changes){
+      this.removeInstance();
+      this.animeInstance = anime.timeline(
+        this.timeline.parent
+      );
+      for(let i=0;i<this.timeline.prop.length;i++){
+        this.animeInstance.add(this.timeline.prop[i]);
+      }
     }
   }
 

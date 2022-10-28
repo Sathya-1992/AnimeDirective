@@ -1,4 +1,4 @@
-<div [appAnime]="this.data.animeProperties" class="container" (click)="disableInput()">
+<div [appAnime]="this.data.animeProperties" [timeline]="{parent:this.data.timelineParent,prop:this.data.timelineProperties}" class="container" (click)="disableInput()">
   <div class="boxCont" (click)="getElementByClick($event)">
     <div class="cir-parent">
       <div class="circle"></div>
@@ -7,7 +7,6 @@
       <div class="box"></div>
       <div class="circle"></div>
     </div>
-    <!-- <div [appAnime]="this.data.animeProperties" class="circle"></div> -->
   </div>
   <div class="boxCont">
     <app-input *ngIf="this.data.isShowForm" [target]="targetElement"></app-input>

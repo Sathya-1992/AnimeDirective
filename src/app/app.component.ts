@@ -11,7 +11,6 @@ export class AppComponent {
   targetElement!:HTMLElement
   constructor(public data:DataService) { }
   getElementByClick(e:any){
-    // this.data.targetElement = e.target;
     this.targetElement = e.target;
     this.data.isShowForm = true;
   }
@@ -19,6 +18,7 @@ export class AppComponent {
   disableInput(){
     this.data.isShowAnimeCard = false;
     this.data.isShowEasing = false;
+    this.data.isShowDirection = false;
   }
   
 }

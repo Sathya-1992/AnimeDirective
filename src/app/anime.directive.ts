@@ -23,7 +23,6 @@ export class AnimeDirective implements OnDestroy,OnChanges{
   ngOnChanges(changes:any): void {
     if ('appAnime' in changes) {
       this.removeInstance();
-      console.log(this.appAnime);
       this.animeInstance = anime(
         this.appAnime,
       );

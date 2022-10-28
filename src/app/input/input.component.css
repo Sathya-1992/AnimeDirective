@@ -6,14 +6,20 @@
 .animeInput{
     position: relative;
 }
-.animeBox,input,.element{
+.animeBox,input,.element,.editor{
     width: 25rem;
-    height: 3rem;
     border: 1px solid rgb(149, 147, 147);
     background-color: #fff;
     display: flex;
     align-items: center;
     padding-left: 1rem;
+}
+.animeBox,input,.element{
+    height: 3rem;
+}
+.editor{
+    min-height: 3rem;
+    flex-wrap: wrap;
 }
 input:focus{
     border: 1px solid rgb(5, 105, 245);

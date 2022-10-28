@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../data.service';
 
@@ -15,9 +16,12 @@ export class InputComponent implements OnInit, AfterViewInit {
 
   @ViewChild ('direction') direction!:ElementRef;
 
+  @ViewChild ('customAnime') customAnime!:ElementRef;
+
   isShowSelector:boolean=false;
   isShowTimeline:boolean=false;
   isAnimeTimeline:boolean=false;
+  isShowCustomEditor:boolean=false;
   selectorName:string="";
   targetArray:any[]=[];
   animation!:string;
@@ -81,6 +85,12 @@ export class InputComponent implements OnInit, AfterViewInit {
     this.animationName.nativeElement.textContent = anime;
     this.animation=anime;
     this.data.isShowAnimeCard=false;
+    if(anime==="Custom"){
+      this.isShowCustomEditor = true;
+    }
+    else{
+      this.isShowCustomEditor = false;
+    }
   }
   
   selectEasing(easing:string){
@@ -102,42 +112,44 @@ export class InputComponent implements OnInit, AfterViewInit {
     }
     else{
       this.addElements();
-      let animeObject:{animation:string,value:number[]} =this.setAnimationType(this.animation);
+      let animeObject =this.setAnimationType(this.animation);
       this.inputProperties = {
         "targets":this.targetArray,
-        [animeObject.animation]:animeObject.value,
+        // [animeObject.animation]:animeObject.value,
         "duration":this.duration,
         "delay":this.delay,
         "easing":this.easingType,
         "direction":this.directionType,
         "loop":this.loop
         };
+      this.inputProperties = Object.assign(this.inputProperties,animeObject);
   
       this.data.setAnimeProperties(this.inputProperties);
     }
       
   }
 
-  setAnimationType(animationName:string):{animation:string,value:number[]}{
+  setAnimationType(animationName:string){
     switch(animationName){
         case "Pulse":
-          return {animation:"scale",value:[1,0.6]};
+          return {"scale":[1,0.6]}
         case "Flash":
-          return {animation:"opacity",value:[1,0]};
+          return {"opacity":[1,0]};
         case "Swing":
-          return {animation:"rotate",value:[-3,3]};
+          return {"rotate":[-3,3]};
         case "Grow":
-          return {animation:"scale",value:[1,0]};
+          return {"scale":[1,0]};
         case "Bounce":
-          return {animation:"translateY",value:[0,-30,0,-15,0,-7,0,-3,0]};     
+          return {"translateY":[0,-30,0,-15,0,-7,0,-3,0]};     
         case "HorizontalMove":
-          return {animation:"translateX",value:[0,100]};
+          return {"translateX":[0,100]};
         case "VerticalMove":
-          return {animation:"translateY",value:[0,100]};
+          return {"translateY":[0,100]};
         case "Rotate":
-          return {animation:"rotate",value:[0,360]};
-        // case "Custom":
-  
+          return {"rotate":[0,360]};
+        case "Custom":
+          let sample:string = this.customAnime.nativeElement.textContent.toString();
+          return JSON.parse(sample);
       }
       return {animation:"",value:[]};
   }
@@ -158,15 +170,15 @@ export class InputComponent implements OnInit, AfterViewInit {
     this.parentEasing = this.easingType;
     this.parentDuration = this.duration;
     this.parentDelay = this.delay;
-    let animeObject:{animation:string,value:number[]} =this.setAnimationType(this.animation);
-    this.timelineProperties.push({[animeObject.animation]:animeObject.value});
+    let animeObject =this.setAnimationType(this.animation);
+    this.timelineProperties.push(animeObject);
     this.targetArray = [];
   }
 
   addTimeline(){
     let timelineObject:any={};
-    let animeObject:{animation:string,value:number[]} =this.setAnimationType(this.animation);
-    timelineObject[animeObject.animation]=animeObject.value;
+    let animeObject =this.setAnimationType(this.animation);
+    Object.assign(timelineObject,animeObject);
     this.addElements();  
     timelineObject["targets"]=this.targetArray;
     if(this.parentEasing!==this.easingType){

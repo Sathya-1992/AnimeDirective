@@ -18,6 +18,7 @@
             <div *ngFor="let anime of this.data.animations" (click)="selectAnimation(anime)">{{anime}}</div>
         </div>
     </div>
+    <div *ngIf="isShowCustomEditor" class="editor" contenteditable="true" #customAnime></div>
     <div>
         <div>Duration</div>
         <input type="number" [(ngModel)]="duration">

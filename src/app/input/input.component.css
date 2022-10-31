@@ -44,6 +44,8 @@ input:focus{
                 0px 5px 5px -3px rgb(0 0 0 / 20%);
     top:4.5rem;
     z-index: 5;
+}
+.searchItems>div{
     padding-left: 1rem;
 }
 .buttonAlign{
@@ -72,4 +74,10 @@ button{
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+button,.selection span,.searchItems{
+    cursor: pointer;
+}
+.searchItems>div:hover{
+    background-color: rgb(226, 228, 223);
 }

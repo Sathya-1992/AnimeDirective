@@ -1,6 +1,6 @@
 <div class="form">
     <div class="animeInput">
-        <div>Element</div>
+        <div>Target</div>
         <div class="element">{{target.className}}</div>
     </div>
     <div>
@@ -10,7 +10,7 @@
         </div>
         <input type="text" *ngIf="isShowSelector" [(ngModel)]="selectorName">
     </div>
-    <button (click)="addElements()">Add Multiple Elements</button>
+    <button (click)="addElements()">Add Multiple Targets</button>
     <div class="animeInput">
         <div>Animation Name</div>
         <div class="animeBox" (click)="showAnimeCard($event)" #animationName></div>

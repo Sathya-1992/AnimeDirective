@@ -1,55 +1,36 @@
 import { JsonPipe } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../data.service';
+import { target, timelineChild } from '../targetModel';
 
 @Component({
   selector: 'app-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.css']
 })
-export class InputComponent implements OnInit, AfterViewInit {
-  // @Input() target:any;
-  
-  @ViewChild ('animationName') animationName!:ElementRef;
-  
-  @ViewChild ('easing') easing!:ElementRef;
+export class InputComponent implements OnInit {
 
-  @ViewChild ('direction') direction!:ElementRef;
-
-  @ViewChild ('customAnime') customAnime!:ElementRef;
-
-  // selectorIndex:number=-1;
+  customAnime:string="";
+  animationInput:string=this.data.animations[0];
+  easingInput:string=this.data.easing[0];
+  directionInput:string = this.data.direction[0];
   isShowTimeline:boolean=false;
   isShowCustomEditor:boolean=false;
-  targets:{name:string,selector?:string}[]=[{name:"",selector:""}];
+  timelineAnimeIndex:number = -1;
+  targets: target[]=[{name:""}];
+  timelineChild: timelineChild[]=[];
   targetArray:any[]=[];
-  animation!:string;
   duration:number=200;
   delay:number=0;
   loop:number=1;
-  easingType!:string;
-  directionType!:string;
   inputProperties !:any;
   timelineParent!:any;
   timelineProperties : any[]=[];
-  parentTarget!:any;
-  parentEasing!:string;
-  parentDuration!:number;
-  parentDelay!:number;
   
   constructor(public data:DataService) { }
 
   ngOnInit(): void {
     
-  }
-
-  ngAfterViewInit(): void {
-    this.animationName.nativeElement.textContent = this.data.animations[0];
-    this.easing.nativeElement.textContent = this.data.easing[0];
-    this.direction.nativeElement.textContent = this.data.direction[0];
-    this.animation = this.data.animations[0];
-    this.easingType = this.data.easing[0];
-    this.directionType = this.data.direction[0];
   }
 
   showAnimeCard(e:Event){
@@ -68,8 +49,7 @@ export class InputComponent implements OnInit, AfterViewInit {
   }
 
   selectAnimation(anime:string){
-    this.animationName.nativeElement.textContent = anime;
-    this.animation=anime;
+    this.animationInput = anime;
     this.data.isShowAnimeCard=false;
     if(anime==="Custom"){
       this.isShowCustomEditor = true;
@@ -80,38 +60,50 @@ export class InputComponent implements OnInit, AfterViewInit {
   }
   
   selectEasing(easing:string){
-    this.easing.nativeElement.textContent = easing;
-    this.easingType = easing;
+    this.easingInput = easing;
     this.data.isShowEasing=false;
   }
 
   selectDirection(direction:string){
-    this.direction.nativeElement.textContent = direction;
-    this.directionType = direction;
+    this.directionInput = direction;
     this.data.isShowDirection=false;
   }
 
   addInputProperties(){
     this.data.isShowForm = false;
-    if(this.isShowTimeline && this.timelineProperties.length>1){
+    if(this.isShowTimeline && this.timelineChild.length>0){
+      this.getTimelineParent();
+      this.getTimelineProperties();
       console.log(this.timelineParent)
+      console.log(this.timelineProperties)
       this.data.setAnimeTimelineProperties(this.timelineParent,this.timelineProperties);
     }
     else{
+      let animeObject;
       this.getTargetArray();
-      let animeObject =this.setAnimationType(this.animation);
+      if(this.animationInput==="Custom"){
+        if(this.customAnime){
+          animeObject = JSON.parse(this.customAnime);
+        }  
+      }
+      else{
+        animeObject =this.setAnimationType(this.animationInput);
+      }
       this.inputProperties = {
         "targets":this.targetArray,
         "duration":this.duration,
         "delay":this.delay,
-        "easing":this.easingType,
-        "direction":this.directionType,
+        "easing":this.easingInput,
+        "direction":this.directionInput,
         "loop":this.loop
         };
       this.inputProperties = Object.assign(this.inputProperties,animeObject);
       this.data.setAnimeProperties(this.inputProperties);
     }
       this.targetArray=[];
+      this.timelineChild=[];
+      this.timelineProperties=[];
+      this.isShowTimeline=false
   }
 
   setAnimationType(animationName:string){
@@ -132,71 +124,93 @@ export class InputComponent implements OnInit, AfterViewInit {
           return {"translateY":[0,100]};
         case "Rotate":
           return {"rotate":[0,360]};
-        case "Custom":
-          let sample:string = this.customAnime.nativeElement.textContent.toString();
-          return JSON.parse(sample);
       }
       return {animation:"",value:[]};
   }
 
-  getTimelineElements(){
-    this.isShowTimeline=!this.isShowTimeline;
+  getTimelineParent(){
     this.getTargetArray();
     this.timelineParent = {
       "targets":this.targetArray,
-      "easing":this.easingType,
+      "easing":this.easingInput,
       "duration":this.duration,
       "delay":this.delay,
-      "direction":this.directionType,
+      "direction":this.directionInput,
       "loop":this.loop
     };
-    this.parentTarget=this.targetArray;
-    this.parentEasing = this.easingType;
-    this.parentDuration = this.duration;
-    this.parentDelay = this.delay;
-    let animeObject =this.setAnimationType(this.animation);
-    this.timelineProperties.push(animeObject);
-    this.targetArray = [];
+  }
+
+  getTimelineElements(){
+    this.isShowTimeline=!this.isShowTimeline;
+  }
+
+  getTimelineProperties(){
+    this.timelineChild.forEach((prop) =>{
+      let timelineObject:any ={};
+      let animeObject;
+      if(prop.targets && prop.targets?.length>=1){
+        let targetNames:string[] = [];
+        prop.targets.forEach((targetName) =>{
+          targetNames.push(targetName.name);
+        })
+        timelineObject["targets"]=targetNames;
+      }
+      if(prop.animationName==="Custom"){
+        if(prop.customAnime){
+          animeObject = JSON.parse(prop.customAnime);
+        }
+      }
+      else{
+        animeObject = this.setAnimationType(prop.animationName);
+      }
+      Object.assign(timelineObject,animeObject);
+      this.timelineProperties.push(timelineObject);
+    })
   }
 
   addTimeline(){
-    let timelineObject:any={};
-    let animeObject =this.setAnimationType(this.animation);
-    Object.assign(timelineObject,animeObject);
-    timelineObject["targets"]=this.targetArray;
-    if(this.parentEasing!==this.easingType){
-      timelineObject["easing"]=this.easingType;
-    }
-    if(this.parentDuration!==this.duration){
-      timelineObject["duration"]=this.duration;
-    }
-    if(this.parentDelay!==this.delay){
-      timelineObject["delay"]=this.delay;
-    }
-    this.timelineProperties.push(timelineObject);
-    this.targetArray = [];
+    this.timelineChild.push({targets:[],animationName:"",customAnime:""});
+  }
+
+  removeTimeline(index:number){
+    this.timelineChild.splice(index,1);
   }
 
   getTargetArray(){
     this.targets.forEach((target) =>{
-      this.targetArray.push(`${target.name} ${target.selector}`)
+      this.targetArray.push(`${target.name}`)
     })
   }
 
   addNewTarget(){
-    this.targets.push({name:"",selector:""});
+    this.targets.push({name:""});
   }
   
   removeTarget(index:number){
     this.targets.splice(index,1);
   }
 
-  // showSelector(index:number){
-  //   if(this.selectorIndex===index){
-  //     this.selectorIndex = -1;
-  //   }
-  //   else{
-  //     this.selectorIndex = index;
-  //   }
-  // }
+  addNewTimelineTarget(index:number){
+    this.timelineChild[index].targets?.push({name:""});
+  }
+
+  removeTimelineTarget(timelineIndex:number,targetIndex:number){
+    this.timelineChild[timelineIndex].targets?.splice(targetIndex,1);
+  }
+
+  showTimelineAnimeCard(e:Event,index:number){
+    e.stopPropagation();
+    if(this.timelineAnimeIndex===index){
+      this.timelineAnimeIndex = -1;
+    }
+    else{
+      this.timelineAnimeIndex = index;
+    }
+  }
+
+  selectTimelineAnimation(anime:string,index:number){
+    this.timelineChild[index].animationName = anime;
+    this.timelineAnimeIndex=-1;
+  }
+
 }

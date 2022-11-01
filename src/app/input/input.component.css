@@ -7,7 +7,7 @@
 }
 .targetParent{
     background-color: rgb(212, 214, 215);
-    padding: 1rem;
+    padding: 0.3rem 1rem 1rem 1rem;
     border-radius: 0.4rem;
 }
 .animeInput{
@@ -36,7 +36,7 @@ input:focus{
     position: absolute;
     right: 1rem; 
 }
-.form,.searchItems,.targetParent{
+.form,.searchItems,.targetParent,.childTimeline,.time-parent{
     display: flex;
     flex-direction: column;
 }
@@ -94,7 +94,19 @@ button,.selection span,.searchItems,.closeBtn{
     width: 1rem;
     border-radius: 3px;
     padding: 4px;
+    position: relative;
+    left: 5px;
+    top: -5px;
 }
 .closeBtn:hover{
     background-color: rgb(155, 156, 157);
+}
+.childTimeline{
+    border: 1px solid rgb(61, 62, 62);
+    border-radius: 4px;
+    padding: 0.4rem 1rem 1rem 1rem;
+    gap: 0.5rem;
+}
+.time-parent{
+    gap: 0.5rem;
 }

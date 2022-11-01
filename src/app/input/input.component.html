@@ -3,30 +3,21 @@
         <div>Targets</div>
         <button (click)="addNewTarget()">Add New</button>
     </div>
-    <div class="targetParent" *ngFor="let target of targets;let i=index;">
-        <div class="animeInput">
-            <div class="timeline">
-                <div>Target</div>
-                <div class="closeBtn" (click)="removeTarget(i)"></div>
-            </div>
-            <input type="text" [(ngModel)]="targets[i].name">
+    <div class="animeInput targetParent" *ngFor="let target of targets;let i=index;">
+        <div class="timeline">
+            <div>Target</div>
+            <div class="closeBtn" (click)="removeTarget(i)"></div>
         </div>
-        <div>
-            <div class="selection">
-                <span>Selector</span>
-            </div>
-            <input type="text" [(ngModel)]="targets[i].selector">
-        </div>
+        <input type="text" [(ngModel)]="targets[i].name">
     </div>
-    
-    <div class="animeInput">
+    <div class="animeInput" *ngIf="!isShowTimeline">
         <div>Animation Name</div>
-        <div class="animeBox" (click)="showAnimeCard($event)" #animationName></div>
+        <input type="text" (click)="showAnimeCard($event)" [(ngModel)]="animationInput" readonly>
         <div class="searchItems" *ngIf="this.data.isShowAnimeCard">
             <div *ngFor="let anime of this.data.animations" (click)="selectAnimation(anime)">{{anime}}</div>
         </div>
     </div>
-    <div *ngIf="isShowCustomEditor" class="editor" contenteditable="true" #customAnime></div>
+    <input type="text" *ngIf="isShowCustomEditor" class="editor" [(ngModel)]="customAnime">
     <div>
         <div>Duration</div>
         <input type="number" [(ngModel)]="duration">
@@ -37,14 +28,14 @@
     </div> 
     <div class="animeInput">
         <div>Easing</div>
-        <div class="animeBox" (click)="showEasing($event)" #easing></div>
+        <input type="text" (click)="showEasing($event)" [(ngModel)]="easingInput" readonly>
         <div class="searchItems" *ngIf="this.data.isShowEasing">
             <div *ngFor="let easing of this.data.easing" (click)="selectEasing(easing)">{{easing}}</div>
         </div>
     </div>
     <div class="animeInput">
         <div>Direction</div>
-        <div class="animeBox" (click)="showDirection($event)" #direction></div>
+        <input type="text" (click)="showDirection($event)" [(ngModel)]="directionInput" readonly>
         <div class="searchItems" *ngIf="this.data.isShowDirection">
             <div *ngFor="let direction of this.data.direction" (click)="selectDirection(direction)">{{direction}}</div>
         </div>
@@ -60,6 +51,33 @@
         </div>
         <button *ngIf="isShowTimeline" (click)="addTimeline()">Add Timeline</button>
     </div>
+    <div class="time-parent" *ngIf="isShowTimeline">
+        <div class="childTimeline" *ngFor="let timeline of timelineChild;let i=index;">
+            <div class="timeline">
+                <div>Targets</div>
+                <div class="timeline">
+                    <button (click)="addNewTimelineTarget(i)">Add New</button>
+                    <div class="closeBtn" (click)="removeTimeline(i)"></div>
+                </div>         
+            </div>
+            <div class="animeInput targetParent" *ngFor="let target of timelineChild[i].targets;let elIndex=index;">
+                <div class="timeline">
+                    <div>Target</div>
+                    <div class="closeBtn" (click)="removeTimelineTarget(i,elIndex)"></div>
+                </div>
+                <input type="text" [(ngModel)]="target.name">
+            </div>  
+            <div class="animeInput">
+                <div>Animation Name</div>
+                <input type="text" (click)="showTimelineAnimeCard($event,i)" [(ngModel)]="timelineChild[i].animationName" readonly>
+                <div class="searchItems" *ngIf="this.timelineAnimeIndex===i">
+                    <div *ngFor="let anime of this.data.animations" (click)="selectTimelineAnimation(anime,i)">{{anime}}</div>
+                </div>
+            </div>
+            <input type="text" *ngIf="timelineChild[i].animationName==='Custom'" class="editor" [(ngModel)]="timelineChild[i].customAnime">
+        </div> 
+    </div>
+    
     <div class="buttonAlign">
         <button (click)="addInputProperties()">Submit</button>
     </div>

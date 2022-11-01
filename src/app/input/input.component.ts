@@ -8,7 +8,7 @@ import { DataService } from '../data.service';
   styleUrls: ['./input.component.css']
 })
 export class InputComponent implements OnInit, AfterViewInit {
-  @Input() target:any;
+  // @Input() target:any;
   
   @ViewChild ('animationName') animationName!:ElementRef;
   
@@ -18,11 +18,10 @@ export class InputComponent implements OnInit, AfterViewInit {
 
   @ViewChild ('customAnime') customAnime!:ElementRef;
 
-  isShowSelector:boolean=false;
+  // selectorIndex:number=-1;
   isShowTimeline:boolean=false;
-  isAnimeTimeline:boolean=false;
   isShowCustomEditor:boolean=false;
-  selectorName:string="";
+  targets:{name:string,selector?:string}[]=[{name:"",selector:""}];
   targetArray:any[]=[];
   animation!:string;
   duration:number=200;
@@ -51,19 +50,6 @@ export class InputComponent implements OnInit, AfterViewInit {
     this.animation = this.data.animations[0];
     this.easingType = this.data.easing[0];
     this.directionType = this.data.direction[0];
-  }
-
-  addElements(){
-    if(this.isShowSelector && this.selectorName){
-      if(!this.targetArray.includes(`.${this.target.className} ${this.selectorName}`)){
-        this.targetArray.push(`.${this.target.className} ${this.selectorName}`);
-      }  
-    }
-    else{
-      if(!this.targetArray.includes(this.target)){
-        this.targetArray.push(this.target);
-      }  
-    }
   }
 
   showAnimeCard(e:Event){
@@ -108,14 +94,14 @@ export class InputComponent implements OnInit, AfterViewInit {
   addInputProperties(){
     this.data.isShowForm = false;
     if(this.isShowTimeline && this.timelineProperties.length>1){
+      console.log(this.timelineParent)
       this.data.setAnimeTimelineProperties(this.timelineParent,this.timelineProperties);
     }
     else{
-      this.addElements();
+      this.getTargetArray();
       let animeObject =this.setAnimationType(this.animation);
       this.inputProperties = {
         "targets":this.targetArray,
-        // [animeObject.animation]:animeObject.value,
         "duration":this.duration,
         "delay":this.delay,
         "easing":this.easingType,
@@ -123,10 +109,9 @@ export class InputComponent implements OnInit, AfterViewInit {
         "loop":this.loop
         };
       this.inputProperties = Object.assign(this.inputProperties,animeObject);
-  
       this.data.setAnimeProperties(this.inputProperties);
     }
-      
+      this.targetArray=[];
   }
 
   setAnimationType(animationName:string){
@@ -156,8 +141,7 @@ export class InputComponent implements OnInit, AfterViewInit {
 
   getTimelineElements(){
     this.isShowTimeline=!this.isShowTimeline;
-    this.isAnimeTimeline = true;
-    this.addElements();
+    this.getTargetArray();
     this.timelineParent = {
       "targets":this.targetArray,
       "easing":this.easingType,
@@ -179,7 +163,6 @@ export class InputComponent implements OnInit, AfterViewInit {
     let timelineObject:any={};
     let animeObject =this.setAnimationType(this.animation);
     Object.assign(timelineObject,animeObject);
-    this.addElements();  
     timelineObject["targets"]=this.targetArray;
     if(this.parentEasing!==this.easingType){
       timelineObject["easing"]=this.easingType;
@@ -193,5 +176,27 @@ export class InputComponent implements OnInit, AfterViewInit {
     this.timelineProperties.push(timelineObject);
     this.targetArray = [];
   }
+
+  getTargetArray(){
+    this.targets.forEach((target) =>{
+      this.targetArray.push(`${target.name} ${target.selector}`)
+    })
+  }
+
+  addNewTarget(){
+    this.targets.push({name:"",selector:""});
+  }
   
+  removeTarget(index:number){
+    this.targets.splice(index,1);
+  }
+
+  // showSelector(index:number){
+  //   if(this.selectorIndex===index){
+  //     this.selectorIndex = -1;
+  //   }
+  //   else{
+  //     this.selectorIndex = index;
+  //   }
+  // }
 }

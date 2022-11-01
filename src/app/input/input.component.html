@@ -1,16 +1,24 @@
 <div class="form">
-    <div class="animeInput">
-        <div>Target</div>
-        <div class="element">{{target.className}}</div>
+    <div class="timeline">
+        <div>Targets</div>
+        <button (click)="addNewTarget()">Add New</button>
     </div>
-    <div>
-        <div class="selection" (click)="isShowSelector=!isShowSelector">
-            <span class="radioBox" [ngClass]="{'selectedBox':isShowSelector}"></span>
-            <span>Selector</span>
+    <div class="targetParent" *ngFor="let target of targets;let i=index;">
+        <div class="animeInput">
+            <div class="timeline">
+                <div>Target</div>
+                <div class="closeBtn" (click)="removeTarget(i)"></div>
+            </div>
+            <input type="text" [(ngModel)]="targets[i].name">
         </div>
-        <input type="text" *ngIf="isShowSelector" [(ngModel)]="selectorName">
+        <div>
+            <div class="selection">
+                <span>Selector</span>
+            </div>
+            <input type="text" [(ngModel)]="targets[i].selector">
+        </div>
     </div>
-    <button (click)="addElements()">Add Multiple Targets</button>
+    
     <div class="animeInput">
         <div>Animation Name</div>
         <div class="animeBox" (click)="showAnimeCard($event)" #animationName></div>
@@ -34,14 +42,14 @@
             <div *ngFor="let easing of this.data.easing" (click)="selectEasing(easing)">{{easing}}</div>
         </div>
     </div>
-    <div class="animeInput" *ngIf="!isAnimeTimeline">
+    <div class="animeInput">
         <div>Direction</div>
         <div class="animeBox" (click)="showDirection($event)" #direction></div>
         <div class="searchItems" *ngIf="this.data.isShowDirection">
             <div *ngFor="let direction of this.data.direction" (click)="selectDirection(direction)">{{direction}}</div>
         </div>
     </div>
-    <div *ngIf="!isAnimeTimeline">
+    <div>
         <div>Loop</div>
         <input type="number" [(ngModel)]="loop">
     </div>

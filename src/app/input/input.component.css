@@ -1,13 +1,20 @@
 .form{
-    background-color: rgb(212, 214, 215);
+    background-color: rgb(238, 240, 241);
+    border: 1px solid rgb(212, 214, 215);
     padding: 1rem;
     gap: 1rem;
+    width: 30rem;
+}
+.targetParent{
+    background-color: rgb(212, 214, 215);
+    padding: 1rem;
+    border-radius: 0.4rem;
 }
 .animeInput{
     position: relative;
 }
 .animeBox,input,.element,.editor{
-    width: 25rem;
+    width: 100%;
     border: 1px solid rgb(149, 147, 147);
     background-color: #fff;
     display: flex;
@@ -29,13 +36,13 @@ input:focus{
     position: absolute;
     right: 1rem; 
 }
-.form,.searchItems{
+.form,.searchItems,.targetParent{
     display: flex;
     flex-direction: column;
 }
 .searchItems{
     position: absolute;
-    width: 25rem;
+    width: 100%;
     border: 1px solid rgba(0,0,0,.2);
     background-color: #fff;
     border-radius: 0 0 2px 2px;
@@ -51,7 +58,7 @@ input:focus{
 .buttonAlign{
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     margin-top: 2rem;
 }
 button{
@@ -75,9 +82,19 @@ button{
     justify-content: space-between;
     align-items: center;
 }
-button,.selection span,.searchItems{
+button,.selection span,.searchItems,.closeBtn{
     cursor: pointer;
 }
 .searchItems>div:hover{
     background-color: rgb(226, 228, 223);
+}
+.closeBtn{
+    background-image: url(./close.png);
+    height: 1rem;
+    width: 1rem;
+    border-radius: 3px;
+    padding: 4px;
+}
+.closeBtn:hover{
+    background-color: rgb(155, 156, 157);
 }

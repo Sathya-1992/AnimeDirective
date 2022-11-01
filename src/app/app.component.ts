@@ -8,12 +8,12 @@ import { DataService } from './data.service';
 })
 export class AppComponent {
   title = 'anime-angular';
-  targetElement!:HTMLElement
+  // targetElement!:HTMLElement
   constructor(public data:DataService) { }
-  getElementByClick(e:any){
-    this.targetElement = e.target;
-    this.data.isShowForm = true;
-  }
+  // getElementByClick(e:any){
+  //   this.targetElement = e.target;
+  //   this.data.isShowForm = true;
+  // }
 
   disableInput(){
     this.data.isShowAnimeCard = false;

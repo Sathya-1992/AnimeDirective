@@ -13,9 +13,7 @@
     <div class="animeInput" *ngIf="!isShowTimeline">
         <div>Animation Name</div>
         <input type="text" (click)="showAnimeCard($event)" [(ngModel)]="animationInput" readonly>
-        <div class="searchItems" *ngIf="this.data.isShowAnimeCard">
-            <div *ngFor="let anime of this.data.animations" (click)="selectAnimation(anime)">{{anime}}</div>
-        </div>
+        <app-list-card *ngIf="this.data.isShowAnimeCard" [inputList]="this.data.animations" (animation)="selectAnimation($event)"></app-list-card>
     </div>
     <input type="text" placeholder='Type Animation like {"width":"100px"}' *ngIf="isShowCustomEditor" class="editor" [(ngModel)]="customAnime">
     <div>
@@ -29,16 +27,12 @@
     <div class="animeInput">
         <div>Easing</div>
         <input type="text" (click)="showEasing($event)" [(ngModel)]="easingInput" readonly>
-        <div class="searchItems" *ngIf="this.data.isShowEasing">
-            <div *ngFor="let easing of this.data.easing" (click)="selectEasing(easing)">{{easing}}</div>
-        </div>
+        <app-list-card *ngIf="this.data.isShowEasing" [inputList]="this.data.easing" (animation)="selectEasing($event)"></app-list-card>
     </div>
     <div class="animeInput">
         <div>Direction</div>
         <input type="text" (click)="showDirection($event)" [(ngModel)]="directionInput" readonly>
-        <div class="searchItems" *ngIf="this.data.isShowDirection">
-            <div *ngFor="let direction of this.data.direction" (click)="selectDirection(direction)">{{direction}}</div>
-        </div>
+        <app-list-card *ngIf="this.data.isShowDirection" [inputList]="this.data.direction" (animation)="selectDirection($event)"></app-list-card>
     </div>
     <div>
         <div>Loop</div>
@@ -70,9 +64,7 @@
             <div class="animeInput">
                 <div>Animation Name</div>
                 <input type="text" (click)="showTimelineAnimeCard($event,i)" [(ngModel)]="timelineChild[i].animationName" readonly>
-                <div class="searchItems" *ngIf="this.data.timelineAnimeIndex===i">
-                    <div *ngFor="let anime of this.data.animations" (click)="selectTimelineAnimation(anime,i)">{{anime}}</div>
-                </div>
+                <app-list-card *ngIf="this.data.timelineAnimeIndex===i" [inputList]="this.data.animations" (animation)="selectTimelineAnimation($event,i)"></app-list-card>
             </div>
             <input type="text" placeholder='Type Animation like {"width":"100px"}' *ngIf="timelineChild[i].animationName==='Custom'" class="editor" [(ngModel)]="timelineChild[i].customAnime">
             <div>
@@ -95,13 +87,10 @@
                     <span>Easing</span>
                 </div>
                 <input type="text" *ngIf="timelineChild[i].isShowEasing" (click)="showTimelineEasing($event,i)" [(ngModel)]="timelineChild[i].easing" readonly>
-                <div class="searchItems" *ngIf="this.data.timelineEasingIndex===i">
-                    <div *ngFor="let easing of this.data.easing" (click)="selectTimelineEasing(easing,i)">{{easing}}</div>
-                </div>
+                <app-list-card *ngIf="this.data.timelineEasingIndex===i" [inputList]="this.data.easing" (animation)="selectTimelineEasing($event,i)"></app-list-card>
             </div>
         </div> 
-    </div>
-    
+    </div>  
     <div class="buttonAlign">
         <button (click)="addInputProperties()">Submit</button>
     </div>

@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-list-card',
@@ -8,12 +9,16 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ListCardComponent implements OnInit {
 
   @Input() inputList!:string[];
-  constructor() { }
+
+  @Output() animation = new EventEmitter<string>();
+
+  constructor(private data:DataService) { }
 
   ngOnInit(): void {
   }
 
-  selectValues(inputValue:string){
-    
+  selectAnimation(anime:string){
+    this.animation.emit(anime);
+    this.data.isShowAnimeCard=false;
   }
 }

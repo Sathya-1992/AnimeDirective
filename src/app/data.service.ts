@@ -11,6 +11,8 @@ export class DataService {
   isShowDirection = false;
 
   isShowForm:boolean = false;
+
+  timelineAnimeIndex:number = -1;
   
   animations:string[]=["Pulse","Flash","Swing","Grow","Bounce","HorizontalMove","VerticalMove","Rotate","Custom"];
   

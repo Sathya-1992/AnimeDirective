@@ -17,7 +17,7 @@
             <div *ngFor="let anime of this.data.animations" (click)="selectAnimation(anime)">{{anime}}</div>
         </div>
     </div>
-    <input type="text" *ngIf="isShowCustomEditor" class="editor" [(ngModel)]="customAnime">
+    <input type="text" placeholder="Type Custom Animations" *ngIf="isShowCustomEditor" class="editor" [(ngModel)]="customAnime">
     <div>
         <div>Duration</div>
         <input type="number" [(ngModel)]="duration">
@@ -70,11 +70,11 @@
             <div class="animeInput">
                 <div>Animation Name</div>
                 <input type="text" (click)="showTimelineAnimeCard($event,i)" [(ngModel)]="timelineChild[i].animationName" readonly>
-                <div class="searchItems" *ngIf="this.timelineAnimeIndex===i">
+                <div class="searchItems" *ngIf="this.data.timelineAnimeIndex===i">
                     <div *ngFor="let anime of this.data.animations" (click)="selectTimelineAnimation(anime,i)">{{anime}}</div>
                 </div>
             </div>
-            <input type="text" *ngIf="timelineChild[i].animationName==='Custom'" class="editor" [(ngModel)]="timelineChild[i].customAnime">
+            <input type="text" placeholder="Type Custom Animations" *ngIf="timelineChild[i].animationName==='Custom'" class="editor" [(ngModel)]="timelineChild[i].customAnime">
         </div> 
     </div>
     

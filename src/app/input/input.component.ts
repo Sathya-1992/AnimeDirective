@@ -16,7 +16,6 @@ export class InputComponent implements OnInit {
   directionInput:string = this.data.direction[0];
   isShowTimeline:boolean=false;
   isShowCustomEditor:boolean=false;
-  timelineAnimeIndex:number = -1;
   targets: target[]=[{name:""}];
   timelineChild: timelineChild[]=[];
   targetArray:any[]=[];
@@ -169,7 +168,7 @@ export class InputComponent implements OnInit {
   }
 
   addTimeline(){
-    this.timelineChild.push({targets:[],animationName:"",customAnime:""});
+    this.timelineChild.push({targets:[],animationName:this.data.animations[0],customAnime:""});
   }
 
   removeTimeline(index:number){
@@ -200,17 +199,17 @@ export class InputComponent implements OnInit {
 
   showTimelineAnimeCard(e:Event,index:number){
     e.stopPropagation();
-    if(this.timelineAnimeIndex===index){
-      this.timelineAnimeIndex = -1;
+    if(this.data.timelineAnimeIndex===index){
+      this.data.timelineAnimeIndex = -1;
     }
     else{
-      this.timelineAnimeIndex = index;
+      this.data.timelineAnimeIndex = index;
     }
   }
 
   selectTimelineAnimation(anime:string,index:number){
     this.timelineChild[index].animationName = anime;
-    this.timelineAnimeIndex=-1;
+    this.data.timelineAnimeIndex=-1;
   }
 
 }

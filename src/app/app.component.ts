@@ -16,6 +16,7 @@ export class AppComponent {
     this.data.isShowEasing = false;
     this.data.isShowDirection = false;
     this.data.timelineAnimeIndex = -1;
+    this.data.timelineEasingIndex = -1;
   }
   
 }

@@ -163,12 +163,21 @@ export class InputComponent implements OnInit {
         animeObject = this.setAnimationType(prop.animationName);
       }
       Object.assign(timelineObject,animeObject);
+      if(prop.isShowDuration && prop.durationValue!==null){
+        timelineObject["duration"] = prop.durationValue;
+      }
+      if(prop.isShowDelay && prop.delayValue!==null){
+        timelineObject["delay"] = prop.delayValue;
+      }
+      if(prop.isShowEasing){
+        timelineObject["easing"] = prop.easing;
+      }
       this.timelineProperties.push(timelineObject);
     })
   }
 
   addTimeline(){
-    this.timelineChild.push({targets:[],animationName:this.data.animations[0],customAnime:""});
+    this.timelineChild.push({targets:[],animationName:this.data.animations[0],customAnime:"",isShowDuration:false,durationValue:this.duration,isShowDelay:false,delayValue:this.delay,isShowEasing:false,easing:this.easingInput});
   }
 
   removeTimeline(index:number){
@@ -210,6 +219,21 @@ export class InputComponent implements OnInit {
   selectTimelineAnimation(anime:string,index:number){
     this.timelineChild[index].animationName = anime;
     this.data.timelineAnimeIndex=-1;
+  }
+
+  showTimelineEasing(e:Event,index:number){
+    e.stopPropagation();
+    if(this.data.timelineEasingIndex===index){
+      this.data.timelineEasingIndex = -1;
+    }
+    else{
+      this.data.timelineEasingIndex = index;
+    }
+  }
+
+  selectTimelineEasing(easing:string,index:number){
+    this.timelineChild[index].easing = easing;
+    this.data.timelineEasingIndex = -1;
   }
 
 }

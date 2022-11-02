@@ -17,7 +17,7 @@
             <div *ngFor="let anime of this.data.animations" (click)="selectAnimation(anime)">{{anime}}</div>
         </div>
     </div>
-    <input type="text" placeholder="Type Custom Animations" *ngIf="isShowCustomEditor" class="editor" [(ngModel)]="customAnime">
+    <input type="text" placeholder='Type Animation like {"width":"100px"}' *ngIf="isShowCustomEditor" class="editor" [(ngModel)]="customAnime">
     <div>
         <div>Duration</div>
         <input type="number" [(ngModel)]="duration">
@@ -74,7 +74,31 @@
                     <div *ngFor="let anime of this.data.animations" (click)="selectTimelineAnimation(anime,i)">{{anime}}</div>
                 </div>
             </div>
-            <input type="text" placeholder="Type Custom Animations" *ngIf="timelineChild[i].animationName==='Custom'" class="editor" [(ngModel)]="timelineChild[i].customAnime">
+            <input type="text" placeholder='Type Animation like {"width":"100px"}' *ngIf="timelineChild[i].animationName==='Custom'" class="editor" [(ngModel)]="timelineChild[i].customAnime">
+            <div>
+                <div class="selection" (click)="timelineChild[i].isShowDuration=!timelineChild[i].isShowDuration">
+                    <span class="radioBox" [ngClass]="{'selectedBox':timelineChild[i].isShowDuration}"></span>
+                    <span>Duration</span>
+                </div>
+                <input type="number" *ngIf="timelineChild[i].isShowDuration" [(ngModel)]="timelineChild[i].durationValue">
+            </div>
+            <div>
+                <div class="selection" (click)="timelineChild[i].isShowDelay=!timelineChild[i].isShowDelay">
+                    <span class="radioBox" [ngClass]="{'selectedBox':timelineChild[i].isShowDelay}"></span>
+                    <span>Delay</span>
+                </div>
+                <input type="number" *ngIf="timelineChild[i].isShowDelay" [(ngModel)]="timelineChild[i].delayValue">
+            </div> 
+            <div class="animeInput">
+                <div class="selection" (click)="timelineChild[i].isShowEasing=!timelineChild[i].isShowEasing">
+                    <span class="radioBox" [ngClass]="{'selectedBox':timelineChild[i].isShowEasing}"></span>
+                    <span>Easing</span>
+                </div>
+                <input type="text" *ngIf="timelineChild[i].isShowEasing" (click)="showTimelineEasing($event,i)" [(ngModel)]="timelineChild[i].easing" readonly>
+                <div class="searchItems" *ngIf="this.data.timelineEasingIndex===i">
+                    <div *ngFor="let easing of this.data.easing" (click)="selectTimelineEasing(easing,i)">{{easing}}</div>
+                </div>
+            </div>
         </div> 
     </div>
     

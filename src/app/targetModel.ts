@@ -5,8 +5,11 @@ export interface target {
 export interface timelineChild {
     targets?: target[],
     animationName : string,
-    customAnime:string
-    // duration?:number,
-    // delay?:number,
-    // easing?:string, 
+    customAnime:string,
+    isShowDuration:boolean,
+    durationValue?:number,
+    isShowDelay:boolean,
+    delayValue?:number,
+    isShowEasing:boolean,
+    easing?:string, 
 }

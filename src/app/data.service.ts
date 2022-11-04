@@ -26,6 +26,10 @@ export class DataService {
 
   timelineParent!:any;
   timelineProperties!:any;
+
+  playAnimation:boolean = true;
+
+  restartAnimation:boolean = false;
   
   constructor() { }
 

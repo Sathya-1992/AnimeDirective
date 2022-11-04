@@ -44,7 +44,7 @@ input:focus{
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 2rem;
+    gap: 0.5rem;
 }
 button{
     padding: 0.5rem 1rem;
@@ -66,6 +66,14 @@ button{
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+.playBtn{
+    padding: 0.1rem 0.7rem;
+    border-radius: 5px;
+    border: 1px solid rgb(171, 171, 169);
+}
+.playBtn:hover{
+    background-color: rgb(221, 217, 217);
 }
 button,.selection span,.closeBtn{
     cursor: pointer;

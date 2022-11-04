@@ -12,6 +12,21 @@ export class AnimeDirective implements OnDestroy,OnChanges{
 
   @Input() appAnimeTimeProp!:any;
 
+  @Input() set playInfo(value:boolean) {
+    if(this.animeInstance){
+      if(value===true){
+        this.animeInstance.play();
+      }
+      else{
+        this.animeInstance.pause();
+      }
+    }   
+  }
+
+  @Input() set restartInfo(value:boolean){
+    this.animeInstance&&this.animeInstance.restart(); 
+  }
+
   private animeInstance:any;
 
   constructor(private elRef: ElementRef) {}

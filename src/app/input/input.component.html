@@ -16,6 +16,11 @@
         <app-list-card *ngIf="this.data.isShowAnimeCard" [inputList]="this.data.animations" (animation)="selectAnimation($event)"></app-list-card>
     </div>
     <input type="text" placeholder='Type Animation like {"width":"100px"}' *ngIf="isShowCustomEditor" class="editor" [(ngModel)]="customAnime">
+    <div class="buttonAlign">
+        <button class="playBtn" (click)="this.data.playAnimation=true">Play</button>
+        <button class="playBtn" (click)="this.data.playAnimation=false">Pause</button>
+        <button class="playBtn" (click)="this.data.restartAnimation=!this.data.restartAnimation">Restart</button>
+    </div>
     <div>
         <div>Duration</div>
         <input type="number" [(ngModel)]="duration">

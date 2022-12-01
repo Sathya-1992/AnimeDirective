@@ -13,6 +13,7 @@ export class AnimeDirective implements OnDestroy,OnChanges{
   @Input() appAnimeTimeProp!:any;
 
   @Input() set playInfo(value:boolean) {
+    console.log("AnimeInstance",this.animeInstance)
     if(this.animeInstance){
       if(value===true){
         this.animeInstance.play();
@@ -38,9 +39,11 @@ export class AnimeDirective implements OnDestroy,OnChanges{
   ngOnChanges(changes:any): void {
     if ('appAnime' in changes) {
       this.removeInstance();
+      console.log("Before start:",this.animeInstance);
       this.animeInstance = anime(
         this.appAnime,
       );
+      console.log("After Start:",this.animeInstance);
     }
     else if('timeline' in changes){
       this.removeInstance();

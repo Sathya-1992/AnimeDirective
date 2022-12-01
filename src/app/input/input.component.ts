@@ -112,17 +112,27 @@ export class InputComponent implements OnInit {
         case "Flash":
           return {"opacity":[1,0]};
         case "Swing":
-          return {"rotate":[-3,3]};
+          return {"rotate":[-3,3,0]};
         case "Grow":
           return {"scale":[1,0]};
         case "Bounce":
           return {"translateY":[0,-30,0,-15,0,-7,0,-3,0]};     
-        case "HorizontalMove":
+        case "MoveX":
           return {"translateX":[0,100]};
-        case "VerticalMove":
+        case "MoveY":
           return {"translateY":[0,100]};
         case "Rotate":
           return {"rotate":[0,360]};
+        case "FlipX":
+          return {"rotateX":[0,180]};
+        case "FlipY":
+          return {"rotateY":[0,180]};
+        case "Vibrate":
+          return {"translateX":[0,-2,-2,2,2,0],"translateY":[0,2,-2,2,-2,0]};
+        case "Gelatine":
+          return {"scaleX":[1,0.9,1.1,0.95,1],"scaleY":[1,1.1,0.9,1.05,1]};
+        case "Waggle":
+          return {"scale":[1,1,1,1.2,1.2,1.2,1.2,1.2,1.2,1,1,1],"rotate":[0,0,0,0,-20,20,-20,0,0,0,0]};
       }
       return {animation:"",value:[]};
   }
@@ -132,7 +142,6 @@ export class InputComponent implements OnInit {
     this.timelineParent = {
       "targets":this.targetArray,
       "easing":this.easingInput,
-      "duration":this.duration,
       "delay":this.delay,
       "direction":this.directionInput,
       "loop":this.loop

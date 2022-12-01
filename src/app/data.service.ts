@@ -16,9 +16,9 @@ export class DataService {
 
   timelineEasingIndex:number = -1;
   
-  animations:string[]=["Pulse","Flash","Swing","Grow","Bounce","HorizontalMove","VerticalMove","Rotate","Custom"];
+  animations:string[]=["Pulse","Flash","Swing","Grow","Bounce","MoveX","MoveY","Rotate","FlipX","FlipY","Vibrate","Gelatine","Waggle","Custom"];
   
-  easing:string[]=['linear','easeInQuad','easeOutQuad','easeInOutQuad','easeOutInQuad','easeInCubic','easeOutCubic','easeInOutCubic','easeOutInCubic','easeInQuart','easeOutQuart']
+  easing:string[]=['linear','easeInQuad','easeOutQuad','easeInOutQuad','easeOutInQuad','easeInCubic','easeOutCubic','easeInOutCubic','easeOutInCubic','easeInElastic','easeOutElastic','easeInOutElastic','easeOutInElastic','easeInBounce','easeOutBounce','easeInOutBounce','easeOutInBounce']
   
   direction:string[]=['alternate','normal','reverse'];
   
